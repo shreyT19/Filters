@@ -1,37 +1,46 @@
+import { ListFilter } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
-	return (
-		<main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-			<div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-				<h1 className="font-extrabold text-5xl text-white tracking-tight sm:text-[5rem]">
-					Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-				</h1>
-				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-					<Link
-						className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-						href="https://create.t3.gg/en/usage/first-steps"
-						target="_blank"
-					>
-						<h3 className="font-bold text-2xl">First Steps →</h3>
-						<div className="text-lg">
-							Just the basics - Everything you need to know to set up your
-							database and authentication.
-						</div>
-					</Link>
-					<Link
-						className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-						href="https://create.t3.gg/en/introduction"
-						target="_blank"
-					>
-						<h3 className="font-bold text-2xl">Documentation →</h3>
-						<div className="text-lg">
-							Learn more about Create T3 App, the libraries it uses, and how to
-							deploy it.
-						</div>
-					</Link>
-				</div>
-			</div>
-		</main>
-	);
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-50 text-slate-900">
+      <div className="container max-w-4xl flex flex-col items-center justify-center gap-8 px-4 py-16">
+        <div className="text-center">
+          <h1 className="font-bold text-3xl tracking-tight sm:text-4xl mb-2">
+            Linear Table Filter Demo
+          </h1>
+          <p className="text-slate-600 max-w-lg mx-auto">
+            A minimal implementation of Linear's powerful table filtering system
+          </p>
+        </div>
+
+        <div className="w-full bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-medium">Issues</h2>
+            <button className="flex items-center gap-1 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 rounded-md transition-colors">
+              <ListFilter className="w-4 h-4" />
+              Filter
+            </button>
+          </div>
+
+          <div className="border-t border-slate-200 py-4">
+            <p className="text-slate-500 text-center text-sm">
+              Click the filter button above to start filtering your data
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-4 mt-4">
+          <Link
+            href="https://linear.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-slate-600 hover:text-slate-900"
+          >
+            Linear Website
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
 }

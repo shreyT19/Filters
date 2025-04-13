@@ -2,12 +2,13 @@
 //! - [ ] Extend custom filter to include other types like date, async_select, enum object  - Cancelled (There is no so such custom case for this case, building out the parser and ui for this case is not worth it at the moment)
 // ! - [ ] Fix generic types in filter.types.ts, currently it is a bit messed:
 // - [ ] Save Filter as Presets or Views - Later
-
+"use client";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import type { IFilter, IFilterColumn } from "~/types/filter.types";
 import { FilterContext } from "./context/filter.context";
-
+import { cn } from "~/lib/utils";
+import FilterOptions from "./components/FilterOptions";
 interface IFilterSystemProps<T> {
   filters?: IFilter<T>[];
   onFiltersChange?: React.Dispatch<React.SetStateAction<IFilter<T>[]>>;
@@ -133,8 +134,14 @@ export default function TableFilterV2<T>({
             handleFilterTypeSelect(option as IFilterColumn<T>),
         }}
       >
-        <div className={`w-full flex flex-col gap-4 ${className}`}>
-          {/* {filters.length === 0 && <FilterOptions variant="text" />} */}
+        <div
+          className={cn(
+            "w-full flex flex-col gap-4",
+            filterMenuOpen && "pb-4",
+            className
+          )}
+        >
+          {filters.length === 0 && <FilterOptions variant="text" />}
           {filters.length > 0 && (
             <div
               className="flex flex-col gap-2"

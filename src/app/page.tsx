@@ -1,5 +1,6 @@
 import { ListFilter } from "lucide-react";
 import Link from "next/link";
+import TableFilterV2 from "~/components/global/Filter/Filter";
 
 export default function HomePage() {
   return (
@@ -15,12 +16,33 @@ export default function HomePage() {
         </div>
 
         <div className="w-full bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex mb-6 flex-col gap-2">
             <h2 className="text-xl font-medium">Issues</h2>
-            <button className="flex items-center gap-1 px-3 py-1.5 text-sm bg-slate-100 hover:bg-slate-200 rounded-md transition-colors">
-              <ListFilter className="w-4 h-4" />
-              Filter
-            </button>
+            <TableFilterV2
+              filterColumns={[
+                {
+                  key: "customer",
+                  label: "Customer Name",
+                  dataType: "string",
+                },
+                {
+                  key: "issueNumber",
+                  label: "Issue Number",
+                  dataType: "number",
+                },
+                {
+                  key: "priority",
+                  label: "Priority",
+                  dataType: "enum",
+                },
+                {
+                  key: "createdAt",
+                  label: "Created At",
+                  dataType: "date",
+                },
+              ]}
+              className="w-fit"
+            />
           </div>
 
           <div className="border-t border-slate-200 py-4">

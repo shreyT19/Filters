@@ -1,6 +1,6 @@
 import { Button } from "~/components/ui/button";
 import { useFilterContext } from "../context/filter.context";
-import CommandSelect from "../command-select";
+import CommandSelect from "../../command-select";
 import {
   Popover,
   PopoverTrigger,
@@ -12,6 +12,7 @@ import {
 } from "~/utils/filter.utils";
 import type { IFilterColumn } from "~/types/filter.types";
 import { ListFilter } from "lucide-react";
+import FilterConditions from "./FilterConditions";
 
 const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
   const {
@@ -43,20 +44,33 @@ const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
   };
 
   return (
-    <Popover open={filterMenuOpen} onOpenChange={setFilterMenuOpen}>
+    <Popover
+      open={filterMenuOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          resetCurrentFilter();
+        }
+        setFilterMenuOpen(open);
+      }}
+    >
       <PopoverTrigger asChild>
         <Button variant="outline">
-          <ListFilter className="w-4 h-4" /> Filter
+          <ListFilter className="w-4 h-4" />
+          Filter
         </Button>
       </PopoverTrigger>
       <PopoverContent className="!p-0 min-w-3xs" align="start">
-        <CommandSelect
-          options={getAvailableFilterColumns()}
-          labelKey="label"
-          valueKey="key"
-          placeholder="Filter by..."
-          onSelect={(_, option) => handleFilterTypeSelect(option)}
-        />
+        {currentStaleFilter ? (
+          <FilterConditions />
+        ) : (
+          <CommandSelect
+            options={getAvailableFilterColumns()}
+            labelKey="label"
+            valueKey="key"
+            placeholder="Filter by..."
+            onSelect={(_, option) => handleFilterTypeSelect(option)}
+          />
+        )}
       </PopoverContent>
     </Popover>
   );

@@ -1,4 +1,3 @@
-import { ListFilter } from "lucide-react";
 import Link from "next/link";
 import TableFilterV2 from "~/components/global/Filter/Filter";
 
@@ -63,16 +62,24 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="flex gap-4 mt-4">
-          <Link
-            href="https://linear.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-slate-600 hover:text-slate-900"
-          >
-            Linear Website
-          </Link>
-        </div>
+        <footer className="w-full mt-12 border-t border-slate-200 pt-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-sm text-slate-500">Made with ❤️</div>
+            {/* <div className="text-sm text-slate-500">
+              Thanks to <span className="font-medium">Rati</span> for the design
+              help
+            </div> */}
+            <div className="text-sm text-slate-500">
+              Inspired by{" "}
+              <Link
+                href="https://linear.app"
+                className="underline hover:text-slate-700"
+              >
+                Linear
+              </Link>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );

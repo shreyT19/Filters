@@ -98,11 +98,14 @@ export default function TableFilterV2<T>({
   /**
    * Close and reset the filter menu
    */
-  const closeAndResetFilter = () => {
-    resetCurrentFilter();
+  const closeAndResetFilter = async () => {
     setFilterMenuOpen(false);
     setFilterOptionsOpen(false);
     setFilterValuesOpen(false);
+    // Not ideal, but for better user experience
+    setTimeout(() => {
+      resetCurrentFilter();
+    }, 100);
   };
 
   const applyFilters = (filtersToApply = filters) => {

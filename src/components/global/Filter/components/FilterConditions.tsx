@@ -16,6 +16,7 @@ import { useFilterContext } from "../context/filter.context";
 import CommandSelect from "../../../global/command-select";
 import { Button } from "~/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import FilterValues from "./FilterValues/FilterValues";
 
 const FilterConditions = ({
   showBackButton = true,
@@ -112,7 +113,7 @@ const FilterConditions = ({
       )}
       <div>
         {showFilterValues ? (
-          <>Filter Values in next update</>
+          <FilterValues />
         ) : (
           <CommandSelect
             options={filterConditions}

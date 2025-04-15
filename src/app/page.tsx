@@ -26,6 +26,17 @@ export default function HomePage() {
                   dataType: "string",
                 },
                 {
+                  key: "isResolved",
+                  label: "Resolved",
+                  dataType: "boolean",
+                  valueProps: {
+                    displayLabels: {
+                      true: "Resolved",
+                      false: "Unresolved",
+                    },
+                  },
+                },
+                {
                   key: "issueNumber",
                   label: "Issue Number",
                   dataType: "number",

@@ -9,13 +9,16 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-slate-50 text-slate-900">
       <div className="container max-w-4xl flex flex-col items-center justify-center gap-8 px-4 py-16">
-        <div className="text-center">
+        <div className="text-center w-full relative">
           <h1 className="font-bold text-3xl tracking-tight sm:text-4xl mb-2">
-            Linear Table Filter Demo
+            Linear Filter Demo
           </h1>
           <p className="text-slate-600 max-w-lg mx-auto">
-            A minimal implementation of Linear's powerful table filtering system
+            A minimal implementation of Linear's powerful filtering system
           </p>
+          <span className="inline-flex mt-4 items-center rounded-md bg-yellow-50 px-2.5 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+            Work in Progress
+          </span>
         </div>
 
         <div className="w-full bg-white rounded-lg shadow-sm border border-slate-200 p-6">

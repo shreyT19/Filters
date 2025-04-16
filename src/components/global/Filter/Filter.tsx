@@ -10,6 +10,8 @@ import { FilterContext } from "./context/filter.context";
 import { cn } from "~/lib/utils";
 import FilterOptions from "./components/FilterOptions";
 import FilterTags from "./components/FilterTags/FilterTags";
+import { useHotkeys } from "react-hotkeys-hook";
+
 interface IFilterSystemProps<T> {
   filters?: IFilter<T>[];
   onFiltersChange?: React.Dispatch<React.SetStateAction<IFilter<T>[]>>;
@@ -32,15 +34,21 @@ export default function TableFilterV2<T>({
   const [currentStaleFilter, setCurrentStaleFilter] =
     useState<IFilter<T> | null>(null);
 
-  //   /**
-  //    * Close the filter menu when the escape key is pressed
-  //    */
-  //   useKeyboardShortcut("Escape", () => closeAndResetFilter());
+  /**
+   * Close the filter menu when the escape key is pressed
+   */
+  useHotkeys("Escape", () => closeAndResetFilter(), {
+    preventDefault: true,
+  });
 
-  //   /**
-  //    * Open the filter menu when the F key is pressed
-  //    */
-  //   useKeyboardShortcut("F", () => setFilterMenuOpen(true));
+  /**
+   * Open the filter menu when the F key is pressed
+   */
+  useHotkeys("F", () => setFilterMenuOpen(true), {
+    // Prevent from triggering the default behavior of the F key
+    preventDefault: true,
+  });
+
   /**
    * Remove a filter by id
    */

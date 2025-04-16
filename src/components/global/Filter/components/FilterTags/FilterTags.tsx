@@ -25,8 +25,6 @@ const FilterTag = ({
 }) => {
   const { removeFilter } = useFilterContext();
 
-  console.log(filter, "Here");
-
   return (
     <div
       className="flex flex-col gap-2 border border-gray-2000 rounded-lg px-2.5 py-1.5 shadow-light animate-fade-right animate-delay-150 animate-duration-300"

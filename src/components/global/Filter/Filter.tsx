@@ -9,6 +9,7 @@ import type { IFilter, IFilterColumn } from "~/types/filter.types";
 import { FilterContext } from "./context/filter.context";
 import { cn } from "~/lib/utils";
 import FilterOptions from "./components/FilterOptions";
+import FilterTags from "./components/FilterTags/FilterTags";
 interface IFilterSystemProps<T> {
   filters?: IFilter<T>[];
   onFiltersChange?: React.Dispatch<React.SetStateAction<IFilter<T>[]>>;
@@ -113,6 +114,8 @@ export default function TableFilterV2<T>({
     // onApply?.(query, _activeFilters);
   };
 
+  console.log(filters);
+
   return (
     <>
       <FilterContext.Provider
@@ -151,7 +154,7 @@ export default function TableFilterV2<T>({
               //   data-testid={FILTER_V2_TEST_IDS.activeFiltersContainer}
             >
               <div className="flex items-start justify-between">
-                {/* <FilterTags /> */}
+                <FilterTags />
                 <div className="flex items-center gap-2">
                   <Button
                     className="w-fit px-3 rounded-lg hover:!text-red-500 hover:!border-red-500 hover:!bg-red-50 transition-all duration-200"

@@ -14,8 +14,8 @@ type Props = {
 const InputSelect = ({ type = "string", customFilterCondition }: Props) => {
   const { currentStaleFilter, addOrUpdateFilter, closeAndResetFilter } =
     useFilterContext();
-  const [value, setValue] = useState<string | number | undefined>(
-    (currentStaleFilter?.selectedValue?.value as string | number) ?? undefined
+  const [value, setValue] = useState<string | number>(
+    (currentStaleFilter?.selectedValue?.value as string | number) || ""
   );
   const focusRef = useRef<HTMLInputElement>(null);
 
@@ -35,7 +35,7 @@ const InputSelect = ({ type = "string", customFilterCondition }: Props) => {
           ? EFilterStringCondition.CONTAINS
           : currentStaleFilter?.selectedCondition) as EFilterStringCondition),
       selectedValue: {
-        value: value,
+        value: type === "number" ? Number(value) : value,
       },
     });
     closeAndResetFilter();
@@ -47,7 +47,7 @@ const InputSelect = ({ type = "string", customFilterCondition }: Props) => {
         <Input
           ref={focusRef}
           placeholder={currentStaleFilter?.column?.label}
-          value={value as string}
+          value={String(value)}
           onChange={(e) => setValue(String(e.target.value))}
           data-testid={`${currentStaleFilter?.column?.label.toLocaleLowerCase()}-string-input`}
         />
@@ -56,15 +56,22 @@ const InputSelect = ({ type = "string", customFilterCondition }: Props) => {
           ref={focusRef}
           type="number"
           placeholder={currentStaleFilter?.column?.label}
-          value={value as number}
+          value={Number(value)}
           onChange={(e) => setValue(Number(e.target.value))}
           data-testid={`${currentStaleFilter?.column?.label.toLocaleLowerCase()}-number-input`}
         />
       )}
       <ApplyFilterButton
-        disabled={!value}
+        disabled={
+          !(value as string).trim() ||
+          (typeof value === "number" && isNaN(value))
+        }
         onClick={handleApplyFilter}
-        title={!value ? "Please enter a value to apply this filter" : ""}
+        title={
+          !(value as string).trim()
+            ? "Please enter a value to apply this filter"
+            : ""
+        }
       >
         Apply
       </ApplyFilterButton>

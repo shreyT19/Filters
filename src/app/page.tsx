@@ -1,7 +1,11 @@
+"use client";
 import Link from "next/link";
 import TableFilterV2 from "~/components/global/Filter/Filter";
+import type { IFilter } from "~/types/filter.types";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [filters, setFilters] = useState<IFilter<any>[]>([]);
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-slate-50 text-slate-900">
       <div className="container max-w-4xl flex flex-col items-center justify-center gap-8 px-4 py-16">
@@ -51,7 +55,8 @@ export default function HomePage() {
                   dataType: "date",
                 },
               ]}
-              className="w-fit"
+              filters={filters}
+              onFiltersChange={setFilters}
             />
           </div>
 

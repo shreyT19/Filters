@@ -54,9 +54,14 @@ const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
       }}
     >
       <PopoverTrigger asChild>
-        <Button variant="outline">
-          <ListFilter className="w-4 h-4" />
-          Filter
+        <Button variant="outline" className="w-fit">
+          {variant === "icon" && <ListFilter className="w-4 h-4" />}
+          {variant === "text" && (
+            <>
+              <ListFilter className="w-4 h-4" />
+              Filter
+            </>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="!p-0 min-w-3xs" align="start">

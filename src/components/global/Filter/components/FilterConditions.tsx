@@ -93,6 +93,8 @@ const FilterConditions = ({
     }
   }, [shouldSkipFilterConditions]);
 
+  console.log(filterConditions);
+
   return (
     <div className="flex flex-col">
       {showBackButton && (
@@ -117,6 +119,8 @@ const FilterConditions = ({
         ) : (
           <CommandSelect
             options={filterConditions}
+            labelKey="label"
+            valueKey="value"
             placeholder="Filter by..."
             onSelect={(value, option) => {
               const customOption =

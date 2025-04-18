@@ -19,7 +19,6 @@ const InputSelect = ({ type = "string", customFilterCondition }: Props) => {
   );
   const focusRef = useRef<HTMLInputElement>(null);
 
-  //TODO: The focus is not working, need to fix it later
   useEffect(() => {
     if (focusRef.current) {
       focusRef.current?.focus();

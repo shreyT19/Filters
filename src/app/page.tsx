@@ -51,6 +51,9 @@ export default function HomePage() {
                   key: "priority",
                   label: "Priority",
                   dataType: "enum",
+                  valueProps: {
+                    options: ["Low", "Medium", "High"],
+                  },
                 },
                 {
                   key: "createdAt",

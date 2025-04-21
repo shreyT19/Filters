@@ -25,20 +25,20 @@ const MultiSelect = () => {
 
     if (currentStaleFilter?.column.dataType === "object") {
       const objectType = currentStaleFilter.column as IFilterColumnObject;
-      return async () => objectType.valueProps.options;
+      return async (query: string) => objectType.valueProps.options;
     }
 
     if (currentStaleFilter?.column.dataType === "enum") {
       const enumType = currentStaleFilter.column as IFilterColumnEnum;
       // Convert enum strings to object format
-      return async () =>
+      return async (query: string) =>
         enumType.valueProps.options.map((option) => ({
           [getLabelKey()]: startCase(option),
           [getValueKey()]: option,
         }));
     }
 
-    return async () => [];
+    return async (query: string) => [];
   };
 
   const getLabelKey = () => {
@@ -72,9 +72,7 @@ const MultiSelect = () => {
     // ILoadOptionsItemType[] | undefined
     any[] | undefined
   >(
-    currentStaleFilter?.selectedValue?.metaData as
-      // | ILoadOptionsItemType[]
-      | undefined
+    currentStaleFilter?.selectedValue?.metaData as undefined // | ILoadOptionsItemType[]
   );
 
   const handleApplyFilter = () => {
@@ -125,9 +123,7 @@ const MultiSelect = () => {
         }}
         selectedValues={selectedValues}
         selectedOptions={selectedOptions}
-        loadOptions={(query: string) =>
-          getOptions()(query) as Promise<any[]>
-        }
+        loadOptions={(query: string) => getOptions()(query) as Promise<any[]>}
         placeholder="Search..."
         showInitials={currentStaleFilter?.column.dataType === "async_list"}
         dataTestId={`${currentStaleFilter?.column.label.toLocaleLowerCase()}-multi-select`}

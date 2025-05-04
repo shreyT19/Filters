@@ -45,9 +45,6 @@ const FilterTag = ({
         />
         <div className="border-r border-gray-2000 !h-4" />
         {/* Filter Value Selector */}
-        <div className="text-gray-400 text-xs">
-          {filter?.selectedValue?.value}
-        </div>
         <FilterValueSelectorInTags
           filter={filter}
           isOpen={isPopoverOpen}

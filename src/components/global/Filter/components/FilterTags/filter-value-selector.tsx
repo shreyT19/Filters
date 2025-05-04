@@ -9,6 +9,7 @@ import { IFilter } from "~/types/filter.types";
 import FilterValuesForAsyncList from "./components/filter-values-async-list";
 import FilterValuesForBoolean from "./components/filter-values-boolean";
 import FilterValuesForDate from "./components/filter-values-date";
+import FilterValues from "../FilterValues/FilterValues";
 
 interface FilterValueSelectorProps {
   filter: IFilter;
@@ -56,7 +57,7 @@ const FilterValueSelectorInTags = ({
         </span>
       </PopoverTrigger>
       <PopoverContent className="!p-0 min-w-3xs" align="start">
-        {/* Content goes here */}
+        <FilterValues />
       </PopoverContent>
     </Popover>
   );

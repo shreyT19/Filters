@@ -68,10 +68,12 @@ const ToolTip = ({
   align?: "center" | "start" | "end";
 }) => {
   return (
-    <TooltipPrimitive.Root {...props}>
-      {children}
-      <TooltipPrimitive.Content align={align}>{title}</TooltipPrimitive.Content>
-    </TooltipPrimitive.Root>
+    <TooltipProvider {...props} delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipContent align={align}>{title}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

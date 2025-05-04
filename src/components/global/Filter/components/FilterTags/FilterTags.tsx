@@ -1,12 +1,11 @@
-// import { getIconForKeyword, IconType } from "~/utils/iconUtils";
 import FilterPopover from "../FilterOptions";
 import { useState } from "react";
 import type { IFilter } from "~/types/filter.types";
-// import FilterValueSelectorInTags from "./FilterValueSelectorInTags";
-// import FilterConditionSelectorInTags from "./FilterConditionSelectorInTags";
 import { FILTER_V2_TEST_IDS } from "~/utils/filter.utils";
-import { CircleX, CrossIcon } from "lucide-react";
+import { CircleX } from "lucide-react";
 import { useFilterContext } from "../../context/filter.context";
+import FilterConditionSelectorInTags from "./filter-condition-selector";
+import FilterValueSelectorInTags from "./filter-value-selector";
 
 const FilterTag = ({
   filter,
@@ -38,23 +37,22 @@ const FilterTag = ({
         </div>
         <div className="border-r border-gray-2000 !h-4" />
         {/* Filter Condition */}
-        <div className="text-gray-400 text-xs">{filter?.selectedCondition}</div>
-        {/* <FilterConditionSelectorInTags
+        <FilterConditionSelectorInTags
           filter={filter}
           index={index}
           isOpen={isFilterConditionPopoverOpen}
           onOpenChange={onFilterConditionPopoverOpenChange}
-        /> */}
+        />
         <div className="border-r border-gray-2000 !h-4" />
         {/* Filter Value Selector */}
         <div className="text-gray-400 text-xs">
           {filter?.selectedValue?.value}
         </div>
-        {/* <FilterValueSelectorInTags
+        <FilterValueSelectorInTags
           filter={filter}
           isOpen={isPopoverOpen}
           onOpenChange={onPopoverOpenChangeForFilterValue}
-        /> */}
+        />
 
         <div className="border-r border-gray-2000 !h-4" />
         {/* Remove Filter Button */}

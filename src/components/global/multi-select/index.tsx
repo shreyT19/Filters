@@ -279,7 +279,10 @@ const MultiSelectCommand = <T,>({
               checked={isSelected}
               onChange={(e) => {
                 e.stopPropagation();
-                handleSelectionChange(option, e.target.checked);
+                handleSelectionChange(
+                  option,
+                  (e.target as HTMLInputElement).checked
+                );
               }}
             />
           ) : null}

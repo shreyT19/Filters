@@ -12,11 +12,11 @@ import {
   getFilterConditionsFromDataType,
   SHOW_FILTER_CONDITIONS_DATA_TYPES,
 } from "~/utils/filter.utils";
-import { useFilterContext } from "../context/filter.context";
-import CommandSelect from "../../../global/command-select";
+import { useFilterContext } from "~/components/global/filter/context/filter.context";
+import CommandSelect from "../../command-select";
 import { Button } from "~/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import FilterValues from "./FilterValues/FilterValues";
+import FilterValues from "~/components/global/filter/components/FilterValues/FilterValues";
 
 const FilterConditions = ({
   showBackButton = true,

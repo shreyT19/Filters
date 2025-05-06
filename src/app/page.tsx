@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import TableFilterV2 from "~/components/global/filter/Filter";
+import TableFilterV2 from "~/components/global/Filter/Filter";
 import type { IFilter } from "~/types/filter.types";
 import { useState } from "react";
 

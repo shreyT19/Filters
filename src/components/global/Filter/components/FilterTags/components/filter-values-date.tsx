@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
-import {
-  EFilterDateCondition,
+import type {
   IFilterColumnDate,
   IFilter,
 } from "../../../../../../types/filter.types";
@@ -12,8 +11,7 @@ const FilterValuesForDate = ({ filter }: { filter: IFilter }) => {
 
   const isTimestamp = (filter.column as IFilterColumnDate)?.valueProps
     ?.isTimestamp;
-  const condition =
-    filter?.selectedCondition as unknown as EFilterDateCondition;
+
   const value = filter?.selectedValue?.value;
 
   const formatDate = (date: string) => {

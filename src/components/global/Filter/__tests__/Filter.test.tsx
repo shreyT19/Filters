@@ -238,7 +238,7 @@ describe("TableFilterV2", () => {
     });
   });
 
-  it.only("should render filter options popover when F is pressed", async () => {
+  it("should render filter options popover when F is pressed", async () => {
     const { unmount } = render(
       <TableFilterV2
         filterColumns={sampleFilterColumns}
@@ -323,7 +323,7 @@ describe("TableFilterV2", () => {
     unmount();
   });
 
-  it("should be able to add a number filter", async () => {
+  it.only("should be able to add a number filter", async () => {
     const { onFiltersChangeMock, rerender, unmount } = setupFilterTest();
 
     openFilterPopover();

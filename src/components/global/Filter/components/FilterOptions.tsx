@@ -54,7 +54,11 @@ const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
       }}
     >
       <PopoverTrigger asChild>
-        <Button variant="outline" className="w-fit">
+        <Button
+          variant="outline"
+          className="w-fit"
+          data-testid={FILTER_V2_TEST_IDS.filterButton}
+        >
           {variant === "icon" && <ListFilter className="w-4 h-4" />}
           {variant === "text" && (
             <>
@@ -78,6 +82,7 @@ const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
             valueKey="key"
             placeholder="Filter by..."
             onSelect={(_, option) => handleFilterTypeSelect(option)}
+            dataTestId={FILTER_V2_TEST_IDS.filterOptionsSelect}
           />
         )}
       </PopoverContent>

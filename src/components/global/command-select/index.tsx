@@ -46,7 +46,12 @@ export function CommandSelect<T>({
 
   return (
     <Command className="!p-0" data-testid={dataTestId}>
-      {showSearch && <CommandInput placeholder={placeholder} />}
+      {showSearch && (
+        <CommandInput
+          placeholder={placeholder}
+          data-testid={`${dataTestId}-search`}
+        />
+      )}
       <CommandList>
         <CommandEmpty>{emptyPlaceholderText}</CommandEmpty>
         {heading && (
@@ -68,6 +73,7 @@ export function CommandSelect<T>({
                   onSelect={(currentValue) =>
                     handleSelect(currentValue, option)
                   }
+                  data-testid={`${dataTestId}-${index}`}
                 >
                   {Icon && <Icon className="mr-2 h-4 w-4" />}
                   <span>{optionLabel}</span>
@@ -95,6 +101,7 @@ export function CommandSelect<T>({
                 key={index}
                 value={optionValue}
                 onSelect={(currentValue) => handleSelect(currentValue, option)}
+                data-testid={`${dataTestId}-${index}`}
               >
                 {Icon && <Icon className="mr-2 h-4 w-4" />}
                 <span>{optionLabel}</span>

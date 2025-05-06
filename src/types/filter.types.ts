@@ -212,7 +212,6 @@ export enum EFilterDateCondition {
   IS_ON_OR_AFTER = "is on or after",
   IS_BEFORE = "is before",
   IS_ON_OR_BEFORE = "is on or before",
-  IS_BETWEEN = "is between",
 }
 
 export type IFilterDateCondition = EnumValues<typeof EFilterDateCondition>;

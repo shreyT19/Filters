@@ -7,7 +7,7 @@ import { DayPicker } from "react-day-picker"
 import { cn } from "~/lib/utils"
 import { buttonVariants } from "~/components/ui/button"
 
-function Calendar({
+function DatePicker({
   className,
   classNames,
   showOutsideDays = true,
@@ -72,4 +72,4 @@ function Calendar({
   )
 }
 
-export { Calendar }
+export default DatePicker;

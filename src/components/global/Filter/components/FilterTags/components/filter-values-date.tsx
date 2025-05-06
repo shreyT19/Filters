@@ -23,10 +23,6 @@ const FilterValuesForDate = ({ filter }: { filter: IFilter }) => {
       : formattedDate;
   };
 
-  if (condition === EFilterDateCondition.IS_BETWEEN && Array.isArray(value)) {
-    return <>{value?.map((val) => formatDate(val as string)).join(" - ")}</>;
-  }
-
   return <>{typeof value === "string" ? formatDate(value) : null}</>;
 };
 

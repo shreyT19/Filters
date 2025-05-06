@@ -64,7 +64,11 @@ const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="!p-0 min-w-3xs" align="start">
+      <PopoverContent
+        className="!p-0 min-w-3xs"
+        align="start"
+        data-testid={FILTER_V2_TEST_IDS.filterOptionsPopoverContent}
+      >
         {currentStaleFilter ? (
           <FilterConditions />
         ) : (

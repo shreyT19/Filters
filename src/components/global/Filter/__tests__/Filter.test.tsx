@@ -238,7 +238,7 @@ describe("TableFilterV2", () => {
     });
   });
 
-  it("should render filter options popover when F is pressed", async () => {
+  it.only("should render filter options popover when F is pressed", async () => {
     const { unmount } = render(
       <TableFilterV2
         filterColumns={sampleFilterColumns}

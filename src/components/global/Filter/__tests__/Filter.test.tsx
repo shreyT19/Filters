@@ -323,7 +323,7 @@ describe("TableFilterV2", () => {
     unmount();
   });
 
-  it.only("should be able to add a number filter", async () => {
+  it("should be able to add a number filter", async () => {
     const { onFiltersChangeMock, rerender, unmount } = setupFilterTest();
 
     openFilterPopover();
@@ -357,9 +357,9 @@ describe("TableFilterV2", () => {
     fireEvent.click(filterConditions[0] as HTMLDivElement);
 
     // Find the number input field for the amount filter
-    const filterValueInput = screen
-      .getByTestId(`${sampleFilterColumns?.[1]?.key}-number-input`)
-      .querySelector("input") as HTMLInputElement;
+    const filterValueInput = screen.getByTestId(
+      `${sampleFilterColumns?.[1]?.key}-number-input`
+    ) as HTMLInputElement;
 
     // Enter the value 100 into the input field
     fireEvent.change(filterValueInput, { target: { value: 100 } });
@@ -392,7 +392,7 @@ describe("TableFilterV2", () => {
     unmount();
   });
 
-  it("should be able to add a date filter", async () => {
+  it.only("should be able to add a date filter", async () => {
     const { onFiltersChangeMock, rerender, unmount } = setupFilterTest();
 
     openFilterPopover();

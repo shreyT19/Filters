@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { Button, type ButtonProps } from "~/components/ui/button";
+import { FILTER_V2_TEST_IDS } from "~/utils/filter.utils";
 
 const ApplyFilterButton = (props: ButtonProps) => {
   useEffect(() => {
@@ -25,7 +26,7 @@ const ApplyFilterButton = (props: ButtonProps) => {
       //     placement: "right",
       //   }}
       //   endIcon={<KeyboardShortcut targetKey="enter" />}
-      //   dataTestId={FILTER_V2_TEST_IDS.filterApplyButton}
+        dataTestId={FILTER_V2_TEST_IDS.filterApplyButton}
     >
       Apply Filter
     </Button>

@@ -61,16 +61,9 @@ const InputSelect = ({ type = "string", customFilterCondition }: Props) => {
         />
       )}
       <ApplyFilterButton
-        disabled={
-          !(value as string).trim() ||
-          (typeof value === "number" && isNaN(value))
-        }
+        disabled={!value}
         onClick={handleApplyFilter}
-        title={
-          !(value as string).trim()
-            ? "Please enter a value to apply this filter"
-            : ""
-        }
+        title={!value ? "Please enter a value to apply this filter" : ""}
       >
         Apply
       </ApplyFilterButton>

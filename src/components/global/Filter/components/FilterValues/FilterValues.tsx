@@ -25,10 +25,10 @@ const FilterValues = () => {
   // Map data types to their corresponding components
   switch (effectiveDataType) {
     case "string":
-      return <InputSelect />;
+      return <InputSelect type="string" />;
 
     case "number":
-      return <InputSelect />;
+      return <InputSelect type="number" />;
 
     case "date":
       return <DateSelect />;

@@ -392,7 +392,7 @@ describe("TableFilterV2", () => {
     unmount();
   });
 
-  it.only("should be able to add a date filter", async () => {
+  it("should be able to add a date filter", async () => {
     const { onFiltersChangeMock, rerender, unmount } = setupFilterTest();
 
     openFilterPopover();
@@ -430,8 +430,10 @@ describe("TableFilterV2", () => {
       `${sampleFilterColumns?.[2]?.key}-date-picker`
     );
 
-    // click on text having value Yesterday
-    fireEvent.click(screen.getByText("Yesterday"));
+    const date = screen.getAllByRole("gridcell")[8] as HTMLButtonElement;
+
+    // click on any date
+    fireEvent.click(date);
 
     // Click enter key
     fireEvent.keyDown(filterValueInput, {
@@ -457,12 +459,11 @@ describe("TableFilterV2", () => {
     expect(filterTags).toBeInTheDocument();
 
     // Verify the filter tag content
-    // Get yesterday's date in the format "Apr 01, 2025"
-    const yesterday = dayjs().subtract(1, "day").format(displayDateFormat);
+    const selectedDate = dayjs().date(5).format(displayDateFormat);
     verifyFilterTag(
       sampleFilterColumns?.[2]?.label!,
       EFilterDateCondition.IS,
-      yesterday
+      selectedDate
     );
 
     unmount();
@@ -474,7 +475,6 @@ describe("TableFilterV2", () => {
     openFilterPopover();
     searchForFilterOption(sampleFilterColumns?.[3]?.label!);
     selectFilterOption(3);
-
     const filterConditions = Array.from({ length: 2 }, (_, index) =>
       screen.getByTestId(
         `${startCase(

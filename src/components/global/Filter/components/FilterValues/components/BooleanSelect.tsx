@@ -30,8 +30,10 @@ const BooleanSelect = () => {
 
   const filterColumn = currentStaleFilter?.column as IFilterColumnBoolean;
 
+  const dataTestId = `${currentStaleFilter?.column?.label.toLocaleLowerCase()}-boolean-select`;
+
   return (
-    <Command>
+    <Command data-testid={dataTestId}>
       <CommandList>
         <CommandGroup>
           {[
@@ -43,11 +45,12 @@ const BooleanSelect = () => {
               value: false.toString(),
               label: filterColumn?.valueProps?.displayLabels?.false,
             },
-          ].map((option) => (
+          ].map((option, index) => (
             <CommandItem
               key={option.value}
               value={option.value}
               onSelect={(currentValue) => handleValueChange(currentValue)}
+              data-testid={`${dataTestId}-${index}`}
             >
               {option.label}
               <Check

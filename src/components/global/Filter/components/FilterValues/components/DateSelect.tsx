@@ -115,6 +115,7 @@ const DateSelect = () => {
           }
         }}
         mode="single"
+        data-testid={`${dateFilter?.key}-date-picker`}
       />
 
       <ApplyFilterButton

@@ -28,13 +28,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Check if pnpm-lock.yaml exists
+          # Install dependencies without frozen lockfile if lock file doesn't exist
           if [ ! -f "pnpm-lock.yaml" ]; then
-            echo "No lock file found. Generating pnpm-lock.yaml..."
-            pnpm install --lockfile-only
+            echo "No lock file found. Installing dependencies..."
+            pnpm install --no-frozen-lockfile
+          else
+            echo "Lock file found. Installing dependencies with frozen lockfile..."
+            pnpm install --frozen-lockfile
           fi
-          # Install dependencies
-          pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm run build
@@ -78,13 +79,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Check if pnpm-lock.yaml exists
+          # Install dependencies without frozen lockfile if lock file doesn't exist
           if [ ! -f "pnpm-lock.yaml" ]; then
-            echo "No lock file found. Generating pnpm-lock.yaml..."
-            pnpm install --lockfile-only
+            echo "No lock file found. Installing dependencies..."
+            pnpm install --no-frozen-lockfile
+          else
+            echo "Lock file found. Installing dependencies with frozen lockfile..."
+            pnpm install --frozen-lockfile
           fi
-          # Install dependencies
-          pnpm install --frozen-lockfile
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -140,13 +142,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Check if pnpm-lock.yaml exists
+          # Install dependencies without frozen lockfile if lock file doesn't exist
           if [ ! -f "pnpm-lock.yaml" ]; then
-            echo "No lock file found. Generating pnpm-lock.yaml..."
-            pnpm install --lockfile-only
+            echo "No lock file found. Installing dependencies..."
+            pnpm install --no-frozen-lockfile
+          else
+            echo "Lock file found. Installing dependencies with frozen lockfile..."
+            pnpm install --frozen-lockfile
           fi
-          # Install dependencies
-          pnpm install --frozen-lockfile
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4

@@ -6,6 +6,24 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: "jsdom",
+    globals: true,
     setupFiles: "./src/tests/vitest.setup.ts",
+
+    // Test timeout
+    testTimeout: 10000,
+
+    // Watch mode configuration
+    watch: false,
+
+    // Reporter configuration
+    reporters: ["default", "html"],
+
+    // Enable parallel test execution
+    pool: "threads",
+    poolOptions: {
+      threads: {
+        singleThread: false,
+      },
+    },
   },
 });

@@ -78,15 +78,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: |
-          # Install dependencies without frozen lockfile if lock file doesn't exist
-          if [ ! -f "pnpm-lock.yaml" ]; then
-            echo "No lock file found. Installing dependencies..."
-            pnpm install --no-frozen-lockfile
-          else
-            echo "Lock file found. Installing dependencies with frozen lockfile..."
-            pnpm install --frozen-lockfile
-          fi
+        run: pnpm install
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4

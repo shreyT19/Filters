@@ -24,7 +24,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
@@ -67,7 +66,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
@@ -89,63 +87,3 @@ jobs:
           SHARD_FILES=$(echo "$TEST_FILES" | sed -n "$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + 1)),$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + FILES_PER_SHARD))p")
           # Run tests for this shard
           pnpm test -- $SHARD_FILES
-
-      - name: Upload test coverage
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: coverage-${{ matrix.shard }}
-          path: coverage/
-          retention-days: 1
-
-  # Combine coverage reports after all shards complete
-  combine-coverage:
-    name: Combine Coverage Reports
-    needs: test
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Download all coverage reports
-        uses: actions/download-artifact@v4
-        with:
-          path: coverage-reports
-          pattern: coverage-*
-          merge-multiple: true
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: .
-
-      - name: Combine coverage reports
-        run: |
-          # Move all coverage reports to a single directory
-          mkdir -p combined-coverage
-          find coverage-reports -name "coverage-final.json" -exec cp {} combined-coverage/ \;
-
-          # Use Vitest to combine reports
-          pnpm test -- --coverage.reporters=json --coverage.reportsDirectory=./final-coverage
-
-      - name: Upload combined coverage
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: final-coverage
-          path: final-coverage/
-          retention-days: 30

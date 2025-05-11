@@ -14,24 +14,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: |
-          # Check if package-lock.json exists
-          if [ ! -f "package-lock.json" ]; then
-            echo "No lock file found. Generating package-lock.json..."
-            npm install --package-lock-only
+          # Check if pnpm-lock.yaml exists
+          if [ ! -f "pnpm-lock.yaml" ]; then
+            echo "No lock file found. Generating pnpm-lock.yaml..."
+            pnpm install --lockfile-only
           fi
           # Install dependencies
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -58,21 +64,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: |
-          # Check if package-lock.json exists
-          if [ ! -f "package-lock.json" ]; then
-            echo "No lock file found. Generating package-lock.json..."
-            npm install --package-lock-only
+          # Check if pnpm-lock.yaml exists
+          if [ ! -f "pnpm-lock.yaml" ]; then
+            echo "No lock file found. Generating pnpm-lock.yaml..."
+            pnpm install --lockfile-only
           fi
           # Install dependencies
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -90,7 +102,7 @@ jobs:
           # Get files for this shard
           SHARD_FILES=$(echo "$TEST_FILES" | sed -n "$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + 1)),$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + FILES_PER_SHARD))p")
           # Run tests for this shard
-          npm test -- $SHARD_FILES
+          pnpm test -- $SHARD_FILES
 
       - name: Upload test coverage
         uses: actions/upload-artifact@v4
@@ -114,21 +126,27 @@ jobs:
           pattern: coverage-*
           merge-multiple: true
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: |
-          # Check if package-lock.json exists
-          if [ ! -f "package-lock.json" ]; then
-            echo "No lock file found. Generating package-lock.json..."
-            npm install --package-lock-only
+          # Check if pnpm-lock.yaml exists
+          if [ ! -f "pnpm-lock.yaml" ]; then
+            echo "No lock file found. Generating pnpm-lock.yaml..."
+            pnpm install --lockfile-only
           fi
           # Install dependencies
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -143,7 +161,7 @@ jobs:
           find coverage-reports -name "coverage-final.json" -exec cp {} combined-coverage/ \;
 
           # Use Vitest to combine reports
-          npm test -- --coverage.reporters=json --coverage.reportsDirectory=./final-coverage
+          pnpm test -- --coverage.reporters=json --coverage.reportsDirectory=./final-coverage
 
       - name: Upload combined coverage
         uses: actions/upload-artifact@v4

@@ -7,8 +7,44 @@ on:
     branches: [main]
 
 jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: |
+          # Check if package-lock.json exists
+          if [ ! -f "package-lock.json" ]; then
+            echo "No lock file found. Generating package-lock.json..."
+            npm install --package-lock-only
+          fi
+          # Install dependencies
+          npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: |
+            .next
+            dist
+          retention-days: 1
+
   test:
     name: Run Tests
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       # Enable fail-fast to stop all jobs if one fails
@@ -29,7 +65,20 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # Check if package-lock.json exists
+          if [ ! -f "package-lock.json" ]; then
+            echo "No lock file found. Generating package-lock.json..."
+            npm install --package-lock-only
+          fi
+          # Install dependencies
+          npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: .
 
       - name: Run tests with sharding
         run: |
@@ -72,7 +121,20 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # Check if package-lock.json exists
+          if [ ! -f "package-lock.json" ]; then
+            echo "No lock file found. Generating package-lock.json..."
+            npm install --package-lock-only
+          fi
+          # Install dependencies
+          npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: .
 
       - name: Combine coverage reports
         run: |

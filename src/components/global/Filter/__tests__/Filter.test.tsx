@@ -5,9 +5,7 @@ import {
   EFilterNumberCondition,
   EFilterObjectCondition,
   EFilterStringCondition,
-  IFilterColumn,
   IFilterColumnBoolean,
-  IFilterColumnCustom,
   IFilterColumnEnum,
   IFilterColumnObject,
   IFilter,
@@ -34,111 +32,14 @@ import { displayDateFormat } from "../components/FilterTags/components/filter-va
 import { FILTER_V2_TEST_IDS } from "~/utils/filter.utils";
 import TableFilterV2 from "../Filter";
 
+import { sampleFilterColumns, type SampleFilterColumn } from "./mockData";
+
 // Mock IntersectionObserver
 mockIntersectionObserver();
 // Mock ResizeObserver
 mockResizeObserver();
 // Mock scrollIntoView
 Element.prototype.scrollIntoView = vi.fn();
-
-type SampleFilterColumn = {
-  customer_name: string;
-  amount: number;
-  date: string;
-  autoCharge: boolean;
-  status: string;
-  user: {
-    name: string;
-    id: string;
-  };
-  email: string;
-};
-
-// Sample filter columns for testing
-const sampleFilterColumns: IFilterColumn<SampleFilterColumn>[] = [
-  {
-    icon: "mail",
-    label: "Customer Name",
-    key: "customer_name",
-    dataType: "string",
-  },
-  {
-    icon: "mail",
-    label: "Amount",
-    key: "amount",
-    dataType: "number",
-  },
-  {
-    icon: "mail",
-    label: "Date",
-    key: "date",
-    dataType: "date",
-  },
-  {
-    icon: "mail",
-    label: "Auto Charge",
-    key: "autoCharge",
-    dataType: "boolean",
-    valueProps: {
-      displayLabels: {
-        true: "Is Enabled",
-        false: "Is Disabled",
-      },
-    },
-  },
-  {
-    icon: "mail",
-    label: "Status",
-    key: "status",
-    dataType: "enum",
-    valueProps: {
-      options: ["in_progress", "success"],
-    },
-  },
-  {
-    icon: "mail",
-    label: "User",
-    key: "user",
-    dataType: "object",
-    valueProps: {
-      labelKey: "name",
-      valueKey: "id",
-      options: [
-        { name: "John Doe", id: "1" },
-        { name: "Jane Doe", id: "2" },
-      ],
-      enableNegativeConditions: true,
-    },
-  },
-  {
-    icon: "mail",
-    key: "email",
-    label: "Email ID",
-    dataType: "custom",
-    conditionProps: [
-      {
-        label: "Contains",
-        value: "contains",
-        filterColumn: {
-          dataType: "string",
-        },
-      },
-      {
-        label: "Is",
-        value: "is empty",
-        filterColumn: {
-          dataType: "boolean",
-          valueProps: {
-            displayLabels: {
-              true: "Empty",
-              false: "Not Empty",
-            },
-          },
-        } as IFilterColumnBoolean,
-      },
-    ],
-  },
-];
 
 const numberFilterConditions = Object.keys(EFilterNumberCondition);
 const dateFilterConditions = Object.keys(EFilterDateCondition);
@@ -678,11 +579,9 @@ describe("TableFilterV2", () => {
     searchForFilterOption(sampleFilterColumns?.[0]?.label!);
     selectFilterOption(0);
 
-    const filterValueInput = screen
-      .getByTestId(
-        `${sampleFilterColumns?.[0]?.label!.toLowerCase()}-string-input`
-      )
-      .querySelector("input") as HTMLInputElement;
+    const filterValueInput = screen.getByTestId(
+      `${sampleFilterColumns?.[0]?.label!.toLowerCase()}-string-input`
+    ) as HTMLInputElement;
 
     expect(filterValueInput).toBeInTheDocument();
 
@@ -795,11 +694,10 @@ describe("TableFilterV2", () => {
     openFilterPopover();
     searchForFilterOption(sampleFilterColumns?.[0]?.label!);
     selectFilterOption(0);
-    const filterValueInput = screen
-      .getByTestId(
-        `${sampleFilterColumns?.[0]?.label!.toLowerCase()}-string-input`
-      )
-      .querySelector("input") as HTMLInputElement;
+    const filterValueInput = screen.getByTestId(
+      `${sampleFilterColumns?.[0]?.label!.toLowerCase()}-string-input`
+    ) as HTMLInputElement;
+
     fireEvent.change(filterValueInput, { target: { value: "John" } });
     applyFilter();
 

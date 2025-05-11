@@ -79,7 +79,7 @@ const FilterOptions = ({ variant = "text" }: { variant?: "icon" | "text" }) => {
           <CommandSelect
             options={getAvailableFilterColumns()}
             labelKey="label"
-            valueKey="key"
+            valueKey="label"
             placeholder="Filter by..."
             onSelect={(_, option) => handleFilterTypeSelect(option)}
             dataTestId={FILTER_V2_TEST_IDS.filterOptionsSelect}

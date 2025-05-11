@@ -33,7 +33,7 @@ export default function HomePage() {
                 },
                 {
                   key: "isResolved",
-                  label: "Resolved",
+                  label: "Auto Charge",
                   dataType: "boolean",
                   valueProps: {
                     displayLabels: {

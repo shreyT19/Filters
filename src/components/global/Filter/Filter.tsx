@@ -122,8 +122,6 @@ export default function TableFilterV2<T>({
     // onApply?.(query, _activeFilters);
   };
 
-  console.log(filters);
-
   return (
     <>
       <FilterContext.Provider

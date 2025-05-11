@@ -93,8 +93,6 @@ const FilterConditions = ({
     }
   }, [shouldSkipFilterConditions]);
 
-  console.log(filterConditions);
-
   return (
     <div className="flex flex-col">
       {showBackButton && (

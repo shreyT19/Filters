@@ -1,89 +1,37 @@
-name: Test
-
+name: Vitest Tests
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
-
+    branches: [main, master]
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm run build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: |
-            .next
-            dist
-          retention-days: 1
-
-  test:
-    name: Run Tests
-    needs: build
+  vitest-tests:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
-      # Enable fail-fast to stop all jobs if one fails
-      fail-fast: true
+      fail-fast: false
       matrix:
-        # Run tests in 4 parallel jobs
-        shard: [1, 2, 3, 4]
-        total: [4]
-
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
+          version: latest
       - name: Install dependencies
         run: pnpm install
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: .
+      - name: Run Vitest tests
+        run: pnpm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
-      - name: Run tests with sharding
-        run: |
-          # Get list of test files
-          TEST_FILES=$(find src -name "*.test.ts" -o -name "*.spec.ts" | sort)
-          # Calculate files per shard
-          TOTAL_FILES=$(echo "$TEST_FILES" | wc -l)
-          FILES_PER_SHARD=$((TOTAL_FILES / ${{ matrix.total }} + 1))
-          # Get files for this shard
-          SHARD_FILES=$(echo "$TEST_FILES" | sed -n "$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + 1)),$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + FILES_PER_SHARD))p")
-          # Run tests for this shard
-          pnpm test -- $SHARD_FILES
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.shardIndex }}
+          path: test-results
+          retention-days: 1

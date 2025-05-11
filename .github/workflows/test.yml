@@ -1,0 +1,92 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      # Enable fail-fast to stop all jobs if one fails
+      fail-fast: true
+      matrix:
+        # Run tests in 4 parallel jobs
+        shard: [1, 2, 3, 4]
+        total: [4]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with sharding
+        run: |
+          # Get list of test files
+          TEST_FILES=$(find src -name "*.test.ts" -o -name "*.spec.ts" | sort)
+          # Calculate files per shard
+          TOTAL_FILES=$(echo "$TEST_FILES" | wc -l)
+          FILES_PER_SHARD=$((TOTAL_FILES / ${{ matrix.total }} + 1))
+          # Get files for this shard
+          SHARD_FILES=$(echo "$TEST_FILES" | sed -n "$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + 1)),$(((${{ matrix.shard }} - 1) * FILES_PER_SHARD + FILES_PER_SHARD))p")
+          # Run tests for this shard
+          npm test -- $SHARD_FILES
+
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.shard }}
+          path: coverage/
+          retention-days: 1
+
+  # Combine coverage reports after all shards complete
+  combine-coverage:
+    name: Combine Coverage Reports
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Download all coverage reports
+        uses: actions/download-artifact@v4
+        with:
+          path: coverage-reports
+          pattern: coverage-*
+          merge-multiple: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Combine coverage reports
+        run: |
+          # Move all coverage reports to a single directory
+          mkdir -p combined-coverage
+          find coverage-reports -name "coverage-final.json" -exec cp {} combined-coverage/ \;
+
+          # Use Vitest to combine reports
+          npm test -- --coverage.reporters=json --coverage.reportsDirectory=./final-coverage
+
+      - name: Upload combined coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-coverage
+          path: final-coverage/
+          retention-days: 30

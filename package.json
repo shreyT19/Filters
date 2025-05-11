@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit",
     "vitest:dev": "vitest --watch",
     "vitest:test": "vitest",
-    "vitest:run": "vitest run",
+    "test": "vitest run",
     "vitest:open": "vitest --ui"
   },
   "dependencies": {
